@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   SheetTrigger,
@@ -5,13 +6,57 @@ import {
   Sheet,
   SheetClose,
 } from "@/components/ui/sheet";
+import { sidebarLinks } from "@/constants";
 import { SignedOut } from "@clerk/nextjs";
-
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavContent = () => {
-  return <section>Navcontent</section>;
+  const pathName = usePathname();
+
+  return (
+    <section className="flex  flex-col gap-6 pt-16">
+      {sidebarLinks.map((sideBarLink) => {
+        const isActive =
+          (pathName.includes(sideBarLink.route) &&
+            sideBarLink.route.length > 1) ||
+          pathName === sideBarLink.route;
+
+        return (
+          <SheetClose key={sideBarLink.route} asChild>
+            <Link
+              href={sideBarLink.route}
+              className={clsx(
+                " flex items-center justify-start gap-4 bg-transparent p-4",
+                {
+                  "primary-gradient rounded-lg text-light-900": isActive,
+                  "text-dark300_light900": !isActive,
+                }
+              )}
+            >
+              <Image
+                src={sideBarLink.imgURL}
+                width={20}
+                height={20}
+                alt={sideBarLink.label}
+                className={clsx({ "invert-colors": !isActive })}
+              />
+              <p
+                className={clsx({
+                  "base-bold": isActive,
+                  "base-medium": !isActive,
+                })}
+              >
+                {sideBarLink.label}
+              </p>
+            </Link>
+          </SheetClose>
+        );
+      })}
+    </section>
+  );
 };
 
 const MobileNavBar = () => {
@@ -45,7 +90,7 @@ const MobileNavBar = () => {
           <NavContent />
         </SheetClose>
         <SignedOut>
-          <div className="flex flex-col gap-3">
+          <div className="mt-20 flex flex-col gap-3">
             <SheetClose asChild>
               <Link href="/sign-in">
                 <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
