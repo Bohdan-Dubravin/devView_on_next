@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Theme from "./Theme";
 import MobileNavBar from "./MobileNavBar";
-import GlobalSearch from "../search/GlobalSearch";
+// import GlobalSearch from "../search/GlobalSearch";
 
 const Navbar = () => {
   return (
@@ -19,7 +19,7 @@ const Navbar = () => {
           Dev<span className="text-primary-500">Flow</span>
         </p>
       </Link>
-      <GlobalSearch />
+      {/* <GlobalSearch /> */}
       <div className="flex-between gap-5"></div>
       <Theme />
       <SignedIn>

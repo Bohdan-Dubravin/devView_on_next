@@ -29,7 +29,7 @@ const NavContent = () => {
             <Link
               href={sideBarLink.route}
               className={clsx(
-                " flex items-center justify-start gap-4 bg-transparent p-4",
+                "flex items-center justify-start gap-4 bg-transparent p-4",
                 {
                   "primary-gradient rounded-lg text-light-900": isActive,
                   "text-dark300_light900": !isActive,
