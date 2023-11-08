@@ -12,7 +12,7 @@ const NavContent = () => {
   const pathName = usePathname();
 
   return (
-    <section className="flex flex-col gap-6 pt-16">
+    <section className="flex flex-col gap-6">
       {sidebarLinks.map((sideBarLink) => {
         const isActive =
           (pathName.includes(sideBarLink.route) &&
@@ -24,7 +24,7 @@ const NavContent = () => {
             key={sideBarLink.route}
             href={sideBarLink.route}
             className={clsx(
-              " flex items-center justify-start gap-4 bg-transparent p-4",
+              " flex items-center justify-start gap-4 bg-transparent p-4 ",
               {
                 "primary-gradient rounded-lg text-light-900": isActive,
                 "text-dark300_light900": !isActive,
@@ -39,7 +39,7 @@ const NavContent = () => {
               className={clsx({ "invert-colors": !isActive })}
             />
             <p
-              className={clsx({
+              className={clsx("max-lg:hidden", {
                 "base-bold": isActive,
                 "base-medium": !isActive,
               })}
@@ -53,11 +53,10 @@ const NavContent = () => {
   );
 };
 
-const SideBar = () => {
+const LeftSideBar = () => {
   return (
-    <section>
-      <div className="background-light900_dark200 fixed mt-16 min-h-screen w-[266px] border-none px-6 pb-8 pt-10 max-sm:hidden">
-        {/* <Link href="/" className="flex items-center gap-1">
+    <section className="background-light900_dark200 light-border sticky left-0 top-0 flex  h-screen  flex-col justify-between border-r px-6 pb-8 pt-36 shadow-light-300 dark:shadow-none max-lg:w-[50px] max-sm:hidden lg:w-[266px]">
+      {/* <Link href="/" className="flex items-center gap-1">
           <Image
             src="/assets/images/site-logo.svg"
             width={23}
@@ -68,25 +67,24 @@ const SideBar = () => {
             Dev<span className="text-primary-500">Flow</span>
           </p>
         </Link> */}
-        <NavContent />
-        <SignedOut>
-          <div className="mt-20 flex flex-col gap-3">
-            <Link href="/sign-in">
-              <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                <span className="primary-text-gradient ">Log In</span>
-              </Button>
-            </Link>
+      <NavContent />
+      <SignedOut>
+        <div className="mt-20 flex flex-col gap-3">
+          <Link href="/sign-in">
+            <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+              <span className="primary-text-gradient ">Log In</span>
+            </Button>
+          </Link>
 
-            <Link href="/sign-up">
-              <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                Sign Up
-              </Button>
-            </Link>
-          </div>
-        </SignedOut>
-      </div>
+          <Link href="/sign-up">
+            <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+              Sign Up
+            </Button>
+          </Link>
+        </div>
+      </SignedOut>
     </section>
   );
 };
 
-export default SideBar;
+export default LeftSideBar;

@@ -17,7 +17,7 @@ const NavContent = () => {
   const pathName = usePathname();
 
   return (
-    <section className="flex  flex-col gap-6 pt-16">
+    <section className="flex  flex-col  gap-6 pt-16">
       {sidebarLinks.map((sideBarLink) => {
         const isActive =
           (pathName.includes(sideBarLink.route) &&
@@ -90,7 +90,7 @@ const MobileNavBar = () => {
           <NavContent />
         </SheetClose>
         <SignedOut>
-          <div className="mt-20 flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <SheetClose asChild>
               <Link href="/sign-in">
                 <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
