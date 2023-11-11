@@ -26,6 +26,11 @@ export interface Country {
   };
 }
 
+export interface FilterT {
+  name: string;
+  value: string;
+}
+
 export interface ParamsProps {
   params: { id: string };
 }
