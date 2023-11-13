@@ -1,5 +1,4 @@
 "use client";
-import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   FormField,
@@ -16,9 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Editor } from "@tinymce/tinymce-react";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 const QuestionForm = () => {
-  const editorRef = useRef(null);
   const form = useForm<z.infer<typeof questionsSchema>>({
     resolver: zodResolver(questionsSchema),
     defaultValues: {
@@ -27,6 +28,40 @@ const QuestionForm = () => {
       tags: [],
     },
   });
+
+  const handleInputChange = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: any
+  ) => {
+    if (e.key === "Enter" && field.name === "tags") {
+      e.preventDefault();
+      const tagInput = e.target as HTMLInputElement;
+      const tagValue = tagInput.value.trim();
+
+      if (tagValue.length) {
+        if (tagValue.length > 15) {
+          return form.setError("tags", {
+            type: "required",
+            message: "Tag must be less than 15 characters",
+          });
+        }
+
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
+        } else {
+          form.trigger();
+        }
+      }
+    }
+  };
+
+  const handleTagRemove = (tag: string, field: any) => {
+    const newTags = field.value.filter((t: string) => t !== tag);
+
+    form.setValue("tags", newTags);
+  };
 
   function onSubmit(values: z.infer<typeof questionsSchema>) {
     // Do something with the form values.
@@ -52,6 +87,7 @@ const QuestionForm = () => {
                   className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                   placeholder="Type your question"
                   {...field}
+                  onKeyDown={(e) => handleInputChange(e, field)}
                 />
               </FormControl>
               <FormDescription className="body-regular  mt-2.5 text-light-500">
@@ -101,6 +137,7 @@ const QuestionForm = () => {
                     toolbar:
                       "undo redo | codesample | bold italic underline forecolor | link image | align | numlist bullist | emoticons charmap ",
                     content_style: "body {font-size: 16px;}",
+                    // resize: false,
                     // tinycomments_mode: "embedded",
                     // tinycomments_author: "Author name",
                     // mergetags_list: [
@@ -132,11 +169,34 @@ const QuestionForm = () => {
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
-                <Input
-                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Add tags..."
-                  {...field}
-                />
+                <>
+                  <Input
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                    placeholder="Add tags..."
+                    onKeyDown={(e) => handleInputChange(e, field)}
+                    // {...field}
+                  />
+                  {field.value.length > 0 && (
+                    <div className="flex-start  mt-2.5  gap-2.5">
+                      {field.value.map((tag: string) => (
+                        <Badge
+                          key={tag}
+                          className="body-medium  background-light800_dark400 text-light400_light500 flex-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                        >
+                          {tag}
+                          <Image
+                            src="/assets/icons/close.svg"
+                            width={12}
+                            height={12}
+                            alt="close icon"
+                            className="cursor-pointer object-contain invert-0 dark:invert"
+                            onClick={() => handleTagRemove(tag, field)}
+                          />
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </>
               </FormControl>
               <FormDescription className="body-regular  mt-2.5 text-light-500">
                 Add up to 3 tags to describe what your question is about. Start
