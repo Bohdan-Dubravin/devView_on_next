@@ -18,6 +18,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.actions";
 
 // ts-ignore
 const typeForm: any = "gd";
@@ -79,7 +80,7 @@ const QuestionForm = () => {
     setIsSubmitting(true);
 
     try {
-      // efefwefwe
+      createQuestion();
     } catch (error) {
     } finally {
       setIsSubmitting(false);

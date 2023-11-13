@@ -210,3 +210,7 @@
 .cl-userButtonPopoverFooter {
   display: none !important;
 }
+
+.tox-statusbar__right-container {
+  display: none !important;
+}
