@@ -15,11 +15,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Editor } from "@tinymce/tinymce-react";
-import React from "react";
+import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
+// ts-ignore
+const typeForm: any = "gd";
+
 const QuestionForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof questionsSchema>>({
     resolver: zodResolver(questionsSchema),
     defaultValues: {
@@ -47,6 +52,13 @@ const QuestionForm = () => {
         }
 
         if (!field.value.includes(tagValue as never)) {
+          if (field.value.length >= 3) {
+            return form.setError("tags", {
+              type: "required",
+              message: "You can add maximum 3 tags",
+            });
+          }
+
           form.setValue("tags", [...field.value, tagValue]);
           tagInput.value = "";
           form.clearErrors("tags");
@@ -64,9 +76,14 @@ const QuestionForm = () => {
   };
 
   function onSubmit(values: z.infer<typeof questionsSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    setIsSubmitting(true);
+
+    try {
+      // efefwefwe
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
   }
   return (
     <Form {...form}>
@@ -206,7 +223,17 @@ const QuestionForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          disabled={isSubmitting}
+          className="primary-gradient w-fit !text-light-900"
+          type="submit"
+        >
+          {isSubmitting ? (
+            <>{typeForm === "edit" ? "Editing" : "Posting"}</>
+          ) : (
+            <>{typeForm === "edit" ? "Edit question" : "Ask a question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
