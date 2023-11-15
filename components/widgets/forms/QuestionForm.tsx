@@ -76,16 +76,16 @@ const QuestionForm = () => {
     form.setValue("tags", newTags);
   };
 
-  function onSubmit(values: z.infer<typeof questionsSchema>) {
+  const onSubmit = async (values: z.infer<typeof questionsSchema>) => {
     setIsSubmitting(true);
 
     try {
-      createQuestion();
+      await createQuestion();
     } catch (error) {
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
   return (
     <Form {...form}>
       <form
@@ -155,6 +155,7 @@ const QuestionForm = () => {
                     toolbar:
                       "undo redo | codesample | bold italic underline forecolor | link image | align | numlist bullist | emoticons charmap ",
                     content_style: "body {font-size: 16px;}",
+
                     // resize: false,
                     // tinycomments_mode: "embedded",
                     // tinycomments_author: "Author name",
@@ -168,6 +169,8 @@ const QuestionForm = () => {
                     //   ),
                   }}
                   initialValue=""
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                 />
               </FormControl>
               <FormDescription className="body-regular  mt-2.5 text-light-500">
