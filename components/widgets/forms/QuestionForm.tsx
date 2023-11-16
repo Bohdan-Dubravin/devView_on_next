@@ -80,7 +80,12 @@ const QuestionForm = () => {
     setIsSubmitting(true);
 
     try {
-      await createQuestion();
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: {},
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);
