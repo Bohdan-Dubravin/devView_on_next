@@ -92,6 +92,7 @@ const QuestionForm = ({ userId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(userId),
+        path: pathName,
       });
 
       router.push("/");
