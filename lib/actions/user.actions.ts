@@ -5,10 +5,11 @@ import { connectToDb } from "../database/mongoose";
 
 export async function getUser(params: any) {
   try {
-    connectToDb();
+    await connectToDb();
     const { userId } = params;
 
     const user = await User.findOne({ clerkId: userId });
+
     return user;
   } catch (error) {
     console.log(error);

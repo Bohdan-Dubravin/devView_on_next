@@ -6,37 +6,12 @@ import HomePageFilter from "@/components/shared/home-page-filter/HomePageFIlter"
 import { HomePageFilters } from "@/constants/filters";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
 import NoResult from "@/components/shared/no-result/NoResult";
+import { getQuestions } from "@/lib/actions/question.actions";
+import { IQuestion } from "@/database/question.model";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading SQL on delete  schema",
-    tags: [
-      { _id: "1", name: "Python" },
-      { _id: "2", name: "SQL" },
-    ],
-    author: { _id: "1", name: "John Doe", picture: "/assets/icons/avatar.svg" },
-    upvotes: 10,
-    views: 879,
-    answers: [],
-    createdAt: new Date("2023-09-01T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "JS closure functionality",
-    tags: [
-      { _id: "1", name: "JavaScript" },
-      { _id: "2", name: "functions" },
-    ],
-    author: { _id: "1", name: "Will Toe", picture: "/assets/icons/avatar.svg" },
-    upvotes: 23,
-    views: 1078,
-    answers: [],
-    createdAt: new Date("2022-09-01T12:00:00.000Z"),
-  },
-];
+const Home = async () => {
+  const data: { questions: IQuestion[] } = await getQuestions({});
 
-const Home = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse gap-4 sm:flex-row">
@@ -64,8 +39,8 @@ const Home = () => {
       <HomePageFilter />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length ? (
-          questions.map((question) => (
+        {data.questions && data.questions.length ? (
+          data.questions.map((question) => (
             <QuestionCard key={question._id} {...question} />
           ))
         ) : (

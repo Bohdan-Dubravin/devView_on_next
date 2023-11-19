@@ -19,11 +19,18 @@ import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 // ts-ignore
 const typeForm: any = "gd";
 
-const QuestionForm = () => {
+interface Props {
+  userId: string;
+}
+
+const QuestionForm = ({ userId }: Props) => {
+  const router = useRouter();
+  const pathName = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof questionsSchema>>({
@@ -84,8 +91,10 @@ const QuestionForm = () => {
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        author: {},
+        author: JSON.parse(userId),
       });
+
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);

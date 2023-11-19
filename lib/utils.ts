@@ -43,6 +43,9 @@ export const getTimeStamp = (createdAt: Date): string => {
 };
 
 export const formatNumber = (num: number): string => {
+  if (!num) {
+    return " ";
+  }
   if (num >= 1000000) {
     return `${(num / 1000000).toFixed(2)}M`;
   } else if (num >= 1000) {
