@@ -57,16 +57,16 @@ const QuestionCard = ({
         />
         <div className="flex-between gap-3">
           <Metric
-            imgUrl="/assets/icons/like.svg"
+            imgUrl={author.picture}
             alt="Upvotes"
             value={formatNumber(upvotes)}
             title="Upvotes"
             textStyle="small-medium text-dark400_light800"
           />
           <Metric
-            imgUrl="/assets/icons/message.svg"
+            imgUrl={author.picture}
             alt="Message"
-            value={formatNumber(answers.length)}
+            value={formatNumber(answers?.length)}
             title="Answers"
             textStyle="small-medium text-dark400_light800"
           />

@@ -48,8 +48,7 @@ export async function getQuestions(params: GetQuestionsParams) {
         path: "author",
         model: User,
       })
-      .sort({ createdAt: -1 })
-      .lean();
+      .sort({ createdAt: -1 });
 
     return { questions };
   } catch (error) {

@@ -10,6 +10,7 @@ import { getQuestions } from "@/lib/actions/question.actions";
 
 const Home = async () => {
   const data = await getQuestions({});
+  console.log(data?.questions);
 
   return (
     <>
@@ -41,7 +42,11 @@ const Home = async () => {
         {data!.questions.length ? (
           data!.questions.map((question) => (
             // @ts-ignore
-            <QuestionCard key={question._id} {...question} />
+            <QuestionCard
+              key={question._id}
+              author={question.author}
+              {...question}
+            />
           ))
         ) : (
           <NoResult

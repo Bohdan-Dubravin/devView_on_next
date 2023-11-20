@@ -1,11 +1,11 @@
 import QuestionForm from "@/components/widgets/forms/QuestionForm";
 import { getUser } from "@/lib/actions/user.actions";
-// import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-  // const { userId } = auth();
-  const userId = "clerk123";
+  const { userId } = auth();
+
   if (!userId) {
     redirect("sign-in");
   }
