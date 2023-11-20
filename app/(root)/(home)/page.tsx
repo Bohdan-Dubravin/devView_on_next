@@ -7,10 +7,9 @@ import { HomePageFilters } from "@/constants/filters";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
 import NoResult from "@/components/shared/no-result/NoResult";
 import { getQuestions } from "@/lib/actions/question.actions";
-import { IQuestion } from "@/database/question.model";
 
 const Home = async () => {
-  const data: { questions: IQuestion[] } = await getQuestions({});
+  const data = await getQuestions({});
 
   return (
     <>
@@ -39,8 +38,9 @@ const Home = async () => {
       <HomePageFilter />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {data.questions && data.questions.length ? (
-          data.questions.map((question) => (
+        {data!.questions.length ? (
+          data!.questions.map((question) => (
+            // @ts-ignore
             <QuestionCard key={question._id} {...question} />
           ))
         ) : (

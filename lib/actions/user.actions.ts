@@ -57,7 +57,7 @@ export async function deleteUser(userData: DeleteUserParams) {
       throw new Error("User not found");
     }
 
-    const deletedQuestions = await Question.deleteMany({ author: clerkId });
+    await Question.deleteMany({ author: clerkId });
 
     return user;
   } catch (error) {
