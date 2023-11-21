@@ -9,6 +9,27 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import { Question } from "@/database/question.model";
+import { Tag } from "@/database/tag.model";
+
+export async function getAllUsers() {
+  try {
+    await connectToDb();
+
+    // const users = await User.find({}).populate({
+    //   path: "tags",
+    //   model: Tag,
+    //   options: { limit: 3 },
+    // });
+
+    const users = await User.find({});
+
+    const tags = await Tag.find().limit(3);
+
+    return { users, tags };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function getUser(params: any) {
   try {

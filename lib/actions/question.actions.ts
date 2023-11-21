@@ -32,10 +32,6 @@ export async function createQuestion(params: CreateQuestionParams) {
   }
 }
 
-// interface TypQuestions {
-//   questions: IQuestion[];
-// }
-
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDb();
