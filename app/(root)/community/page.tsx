@@ -39,7 +39,7 @@ const Home = async () => {
       </div>
       {/* <HomePageFilter /> */}
 
-      <div className="mt-10 flex w-full flex-col gap-6">
+      <div className="mt-10 flex w-full gap-[10px]">
         {data!.users.length ? (
           data!.users.map((user) => (
             // @ts-ignore
