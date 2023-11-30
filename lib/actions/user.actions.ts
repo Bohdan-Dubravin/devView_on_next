@@ -5,25 +5,25 @@ import { connectToDb } from "../database/mongoose";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import { Question } from "@/database/question.model";
 import { Tag } from "@/database/tag.model";
 
-export async function getAllUsers() {
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
     await connectToDb();
 
-    // const users = await User.find({}).populate({
-    //   path: "tags",
-    //   model: Tag,
-    //   options: { limit: 3 },
-    // });
+    const { page = 1, pageSize = 10 } = params;
+    const skip = (page - 1) * pageSize;
+    const users = await User.find({})
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
 
-    const users = await User.find({});
-
-    const tags = await Tag.find().limit(3);
+    const tags = await Tag.find({}).limit(3);
 
     return { users, tags };
   } catch (error) {
@@ -85,5 +85,3 @@ export async function deleteUser(userData: DeleteUserParams) {
     console.log(error);
   }
 }
-
-//  "65567c8757f934230adc6842"

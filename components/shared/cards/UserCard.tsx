@@ -3,6 +3,7 @@ import Link from "next/link";
 import { IUser } from "@/database/user.model";
 import { ITag } from "@/database/tag.model";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 
 interface UserCardProps {
   user: IUser;
@@ -10,38 +11,41 @@ interface UserCardProps {
 }
 
 const UserCard = ({
-  user: { _id, picture, name, username, joinedAt },
+  user: { _id, picture, name, username, clerkId },
   tags,
 }: UserCardProps) => {
   return (
-    <div className="card-wrapper light-border h-[280px] w-[260px] rounded-[10px] border p-[30px]">
-      <Link href={`/profile/${_id}`}>
+    <article className="light-border shadow-light100_darknone card-wrapper  w-full rounded-2xl border  p-8  max-xs:min-w-full  xs:w-[260px]">
+      <Link href={`/profile/${clerkId}`}>
         <div className="flex-center flex-col">
           <Image
             src={picture}
             width={100}
             height={100}
             alt="user avatar"
-            className="mb-5 rounded-full"
+            className="mb-4 rounded-full"
           />
-          <h3 className="sm:h3-semibold base-semibold text-dark200_light800 mb-2 line-clamp-1 flex-1">
+          <h3 className="sm:h3-bold base-semibold text-dark500_light500 mb-2 line-clamp-1">
             {name}
           </h3>
 
           <p className="body-regular text-light400_light500">@{username}</p>
         </div>
       </Link>
-      <div className="flex-center mt-4 gap-2">
-        {tags &&
+      <div className="flex-center mt-5 gap-2">
+        {tags.length ? (
           tags.map((tag) => (
             <RenderTag
               key={tag._id}
               _id={tag._id}
               name={tag.name.slice(0, 3)}
             />
-          ))}
+          ))
+        ) : (
+          <Badge>No Tags yet</Badge>
+        )}
       </div>
-    </div>
+    </article>
   );
 };
 

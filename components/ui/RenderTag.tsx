@@ -16,7 +16,7 @@ const RenderTag = ({
 }: RenderTagProps) => {
   return (
     <Link href={`/tags/${_id}`} className="flex-between cursor-pointer">
-      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md px-4 py-2 uppercase">
+      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md px-4 py-2 uppercase shadow">
         {name}
       </Badge>
       {showCount && (
