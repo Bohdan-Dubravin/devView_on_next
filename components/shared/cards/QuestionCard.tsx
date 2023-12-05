@@ -4,25 +4,21 @@ import Metric from "../metric/Metric";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 
 interface QuestionCardProps {
-  _id: string;
-  title: string;
-  tags: { _id: string; name: string }[];
+  question: {
+    _id: string;
+    title: string;
+    tags: { _id: string; name: string }[];
+    upvotes: number;
+    answers: Object[];
+    createdAt: Date;
+    views: number;
+  };
   author: { _id: string; name: string; picture?: string };
-  upvotes: number;
-  answers: Object[];
-  createdAt: Date;
-  views: number;
 }
 
 const QuestionCard = ({
-  _id,
-  title,
-  tags,
-  upvotes,
+  question: { _id, title, tags, upvotes, answers, createdAt, views },
   author,
-  answers,
-  createdAt,
-  views,
 }: QuestionCardProps) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 max-sm:px-2">

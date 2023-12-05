@@ -1,43 +1,37 @@
 import LocalSearch from "@/components/shared/search/LocalSearch";
 import Filter from "@/components/shared/filter/Filter";
-import { UserFilters } from "@/constants/filters";
+import { TagFilters } from "@/constants/filters";
 import NoResult from "@/components/shared/no-result/NoResult";
-import { getAllUsers } from "@/lib/actions/user.actions";
-
 import TagCard from "@/components/shared/cards/TagCard";
+import { getAllTags } from "@/lib/actions/tag.actions";
 
-const Home = async () => {
-  const data = await getAllUsers({});
+const Tags = async () => {
+  const result = await getAllTags({});
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Tags</h1>
-
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch
           route="/tags"
           iconPosition="left"
           imgIcon="/assets/icons/search.svg"
-          placeholder="Search by tag name"
+          placeholder="Search for tags"
           classes="flex-1"
         />
-        <Filter filters={UserFilters} classes="min-h-[56px] sm:min-w-[170px]" />
+        <Filter filters={TagFilters} classes="min-h-[56px] sm:min-w-[170px]" />
       </div>
       {/* <HomePageFilter /> */}
 
-      <section className="mt-10 flex w-full gap-[10px]">
-        {data!.users.length ? (
-          data!.users.map((user) => (
-            <TagCard key={user._id} user={user} tags={data!.tags} />
-          ))
+      <section className="mt-10 flex w-full gap-[10px] flex-wrap">
+        {result!.tags.length ? (
+          result!.tags.map((tag) => <TagCard key={tag._id} tag={tag} />)
         ) : (
           <NoResult
             title="There no tags to show"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
-          discussion. our query could be the next big thing others learn from. Get
-          involved! 💡"
-            linkText="Sign Up"
-            linkUrl="/sign-up"
+            description="It looks like there are no tags found."
+            linkText="Ask a question"
+            linkUrl="/ask-question"
           />
         )}
       </section>
@@ -45,4 +39,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default Tags;

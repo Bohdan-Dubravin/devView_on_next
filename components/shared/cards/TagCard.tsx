@@ -1,51 +1,25 @@
-import RenderTag from "@/components/ui/RenderTag";
 import Link from "next/link";
-import { IUser } from "@/database/user.model";
 import { ITag } from "@/database/tag.model";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 
 interface TagCardProps {
-  user: IUser;
-  tags: ITag[];
+  tag: ITag;
 }
 
-const TagCard = ({
-  user: { _id, picture, name, username, clerkId },
-  tags,
-}: TagCardProps) => {
+const TagCard = ({ tag }: TagCardProps) => {
   return (
-    <article className="light-border shadow-light100_darknone card-wrapper  w-full rounded-2xl border  p-8  max-xs:min-w-full  xs:w-[260px]">
-      <Link href={`/profile/${clerkId}`}>
-        <div className="flex-center flex-col">
-          <Image
-            src={picture}
-            width={100}
-            height={100}
-            alt="user avatar"
-            className="mb-4 rounded-full"
-          />
-          <h3 className="sm:h3-bold base-semibold text-dark500_light500 mb-2 line-clamp-1">
-            {name}
-          </h3>
-
-          <p className="body-regular text-light400_light500">@{username}</p>
+    <Link href={`/tags/${tag._id}`}>
+      <article className="light-border shadow-light100_darknone card-wrapper background-light900_dark200 text-dark400_light500  w-full rounded-2xl border px-8 py-10 sm:w-[260px]">
+        <div className="background-light800_dark400 w-fit rounded-[4px] px-5 py-1.5">
+          <p className="paragraph-semibold text-dark300_light900">{tag.name}</p>
         </div>
-      </Link>
-      <div className="flex-center mt-5 gap-2">
-        {tags.length ? (
-          tags.map((tag) => (
-            <RenderTag
-              key={tag._id}
-              _id={tag._id}
-              name={tag.name.slice(0, 3)}
-            />
-          ))
-        ) : (
-          <Badge>No Tags yet</Badge>
-        )}
-      </div>
-    </article>
+        <p className="small-medium text-dark400_light500 mt-4">
+          <span className="body-semibold primary-text-gradient mr-2.5">
+            {tag.questions.length}+
+          </span>
+          Questions
+        </p>
+      </article>
+    </Link>
   );
 };
 

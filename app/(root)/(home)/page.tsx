@@ -10,7 +10,6 @@ import { getQuestions } from "@/lib/actions/question.actions";
 
 const Home = async () => {
   const data = await getQuestions({});
-  console.log(data?.questions);
 
   return (
     <>
@@ -41,11 +40,11 @@ const Home = async () => {
       <div className="mt-10 flex w-full flex-col gap-6">
         {data!.questions.length ? (
           data!.questions.map((question) => (
-            // @ts-ignore
             <QuestionCard
               key={question._id}
+              // @ts-ignore
+              question={question}
               author={question.author}
-              {...question}
             />
           ))
         ) : (
